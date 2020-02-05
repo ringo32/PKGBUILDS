@@ -59,59 +59,59 @@ _tr_add2 after_install_umtip   "Update lijst van mirrors alvorens systeem update
 _tr_add2 after_install_us      "Update Systeem"
 _tr_add2 after_install_ustip   "Update Systeem Software"
 
-_tr_add2 after_install_dsi     "Detecteer systeem issues"
+_tr_add2 after_install_dsi     "Detecteer systeem problemen"
 _tr_add2 after_install_dsitip  "Detecteer mogelijke systeem problemen van pakketten"
 
 _tr_add2 after_install_etl     "EndeavourOS tot recentste$_question"
 _tr_add2 after_install_etltip  "Show what to do to get your system to the latest EndeavourOS level"
 
-_tr_add2 after_install_cdm     "Change Display Manager"
-_tr_add2 after_install_cdmtip  "Use a different display manager"
+_tr_add2 after_install_cdm     "Verander Display Manager"
+_tr_add2 after_install_cdmtip  "Gebruik een ander display manager"
 
 _tr_add2 after_install_ew      "EndeavourOS achtergrond"
-_tr_add2 after_install_ewtip   "Change desktop wallpaper to EOS default"
+_tr_add2 after_install_ewtip   "Verander bureaublad achtergrond naar EOS standaard"
 
 
-_tr_add2 after_install_pm      "Package management"
-_tr_add2 after_install_pmtip   "How to manage packages with pacman"
+_tr_add2 after_install_pm      "Pakket beheer"
+_tr_add2 after_install_pmtip   "Hoe je pakketten beheerd met pacman"
 
 _tr_add2 after_install_ay      "AUR $_and yay$_exclamation"
-_tr_add2 after_install_aytip   "Arch User Repository and yay info"
+_tr_add2 after_install_aytip   "Arch User Repository en yay info"
 
-_tr_add2 after_install_hn      "Hardware and Network"
+_tr_add2 after_install_hn      "Hardware and Netwerk"
 _tr_add2 after_install_hntip   "Get your hardware working"
 
 _tr_add2 after_install_bt      "Bluetooth"
-_tr_add2 after_install_bttip   "Bluetooth advice"
+_tr_add2 after_install_bttip   "Bluetooth advies"
 
 _tr_add2 after_install_nv      "NVIDIA users$_exclamation"
-_tr_add2 after_install_nvtip   "Use NVIDIA installer"
+_tr_add2 after_install_nvtip   "Gebruik NVIDIA installer"
 
 _tr_add2 after_install_ft      "Forum tips"
-_tr_add2 after_install_fttip   "Help us help you!"
+_tr_add2 after_install_fttip   "Help ons om jouw the helpen!"
 
 
-_tr_add2 general_info_text     "Find your way at the EndeavourOS website$_exclamation"
+_tr_add2 general_info_text     "Vind uw weg op de EndeavourOS website$_exclamation"
 
 _tr_add2 general_info_ws       "Web site"
 
 _tr_add2 general_info_wi       "Wiki"
 _tr_add2 general_info_witip    "Featured articles"
 
-_tr_add2 general_info_ne       "News"
-_tr_add2 general_info_netip    "News and articles"
+_tr_add2 general_info_ne       "Nieuws"
+_tr_add2 general_info_netip    "Nieuws en artikelen"
 
 _tr_add2 general_info_fo       "Forum"
-_tr_add2 general_info_fotip    "Ask, comment, and chat in our friendly forum!"
+_tr_add2 general_info_fotip    "Gebruik ons gebruiksvriendelijke forum dingen te vragen!"
 
-_tr_add2 general_info_do       "Donate"
-_tr_add2 general_info_dotip    "Help us keep EndeavourOS running"
+_tr_add2 general_info_do       "Donatie"
+_tr_add2 general_info_dotip    "Help ons om EndeavourOS draaiende te houden "
 
-_tr_add2 general_info_ab       "About $PRETTY_PROGNAME"
-_tr_add2 general_info_abtip    "More info about this app"
+_tr_add2 general_info_ab       "Over $PRETTY_PROGNAME"
+_tr_add2 general_info_abtip    "Meer info over dit app"
 
 
-_tr_add2 add_more_apps_text    "Install popular apps"
+_tr_add2 add_more_apps_text    "Install populair apps"
 
 _tr_add2 add_more_apps_lotip   "Office tools (libreoffice-fresh)"
 
