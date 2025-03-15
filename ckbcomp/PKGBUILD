@@ -1,37 +1,54 @@
 #!/bin/bash
 
-# Maintainer: EndeavourOS-Team <info@endeavouros.com>
+# Maintainer: EndeavourOS-Team <info at endeavouros.com>
 
 # Ex-Maintainer:  Nissar Chababy <funilrys at outlook dot com>
 # Ex-Maintainer:  Jeroen Bollen <jbinero at gmail dot comau>
 
-_ckbcomp_preparations() {
-    local site="https://salsa.debian.org"
-
-    url="$site/installer-team/console-setup"
-
-    local data=$(curl --fail --silent --location --max-time 10 $url/-/tags)
-    local dl="$site$(echo "$data" | grep '"nofollow" download' | grep \.tar\.gz | head -n1 | sed -e 's|.* href="||' -e 's|".*||')"
-
-    pkgver=$(echo "$dl" | sed -E 's|.*/([0-9\.]+)/.*|\1|')
-    source=("$dl")
-}
-_ckbcomp_preparations
-unset -f _ckbcomp_preparations
-
 pkgname=ckbcomp
+pkgver=1.228
 pkgrel=1
 pkgdesc="Compile a XKB keyboard description to a keymap suitable for loadkeys or kbdcontrol"
 arch=(any)
 license=('GPL2')
 depends=('perl')
+sha512sums=('e246168b909added076e98d5521348887d3b948ba4a06ab21ed9104eaefc2e63073d5130e5733fb92bc3e4af25e2222698a5edd391d04e27bf3bd14fce7a0fec')
 
-sha512sums=('e0918229094c1c8aa6c51aeb57915003afe95d4c4ea498c713e33d368d78e1798b6318ae743c081134b93d6aa9b5adc4e215f99ffa5aea51d3b2eee38267f4e5')
+_ckbcomp_preparations() {
+    # Fetch 'ckbcomp' from the latest sources.
+    # Out: url, pkgver, source
+    # Notes:
+    # - salsa.debian.org seems slower...
+    # - pkgver may include only numbers, lowercase letters, and "." "+" "~"
+
+    local -r err="echo $pkgname: error:"
+    local changed=no
+    local url_pkgname="https://salsa.debian.org/installer-team/console-setup/raw/master/Keyboard/$pkgname"    # for fetching the $pkgname
+    local url_pkgver="https://sources.debian.org/src/console-setup"                                           # for finding the new $pkgver
+    local tmpfile=$(mktemp)                                                                                   # for saving the (new) $pkgname
+    local INFO
+
+    url="$url_pkgver"
+
+    curl --fail -Lsm 30 -o$tmpfile "$url_pkgname" || exit 1
+    if [ -x /bin/$pkgname ] ; then
+        diff $tmpfile /bin/$pkgname >/dev/null || changed=yes        # If $pkgname is installed, check if there are changes.
+    fi
+    rm -f $tmpfile
+    if [ $changed = yes ] ; then
+        # $pkgname has been changed, so get the new pkgver.
+        # Note: sha512sums for the new $pkgname must be changed manually.
+        INFO=$(curl --fail -Lsm 30 "$url_pkgver") || { $err "fetching version info failed"; exit 1; }
+        pkgver="$(echo "$INFO" | grep -m1 "/src/console-setup/" | sed -E 's|.*/src/console-setup/([^/]+)/.*|\1|')"
+        [ "${pkgver//[a-z0-9.+~]/}" ] && { $err "sorry, pkgver ($pkgver) is invalid"; exit 1; }
+    fi
+    source=("$url_pkgname")
+}
+
+_ckbcomp_preparations
+unset -f _ckbcomp_preparations
 
 package() {
-    local appname=$(basename "${source[0]}"  -$pkgver.tar.gz)
-
-    install -Dm755 "${appname}-$pkgver/Keyboard/$pkgname"   "${pkgdir}/usr/bin/$pkgname"
-
-    rm -f "../${appname}-$pkgver.tar.gz"   # cleanup
+    install -Dm755 $pkgname   "${pkgdir}/usr/bin/$pkgname"
+    rm -f ../$pkgname   # cleanup
 }

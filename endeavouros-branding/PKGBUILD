@@ -1,0 +1,38 @@
+# Maintainer: joekamprad <joekamprad at endeavouros.com>
+
+pkgname=endeavouros-branding
+_srcname=Branding
+pkgver=25.02.1.2
+pkgrel=1
+pkgdesc='Default EndeavourOS background images and icons'
+arch=('any')
+replaces=('endeavouros-theming')
+provides=('endeavouros-theming')
+url='https://www.endeavouros.com'
+license=('GPL3')
+source=("https://github.com/endeavouros-team/Branding/archive/refs/tags/${pkgver}.tar.gz")
+sha512sums=('bd45c4ef57b60ceb231c50a88cb50b1a526353fae6a9ab398302d040c1687df37f214470102859db37718350f49b61c97bdf98224b25913feae11f60ed8d1501')
+
+package() {
+  cd "$srcdir/$_srcname-$pkgver"
+
+  install -Dm644 icons/{*.png,*.svg} -t "${pkgdir}/usr/share/endeavouros"
+  install -Dm644 backgrounds/splash.png -t "${pkgdir}/usr/share/endeavouros"
+  install -Dm644 icons/endeavouros.{svg,png} -t "${pkgdir}/usr/share/pixmaps"
+  install -Dm644 icons/endeavouros-icon.png  -t "${pkgdir}/usr/share/pixmaps"
+  install -Dm644 icons/endeavouros-dark.{svg,png} -t "${pkgdir}/usr/share/pixmaps"
+  install -Dm644 icons/endeavouros-logo-text.svg -t "${pkgdir}/usr/share/pixmaps"
+  install -Dm644 icons/endeavouros-logo-text-dark.svg -t "${pkgdir}/usr/share/pixmaps"
+  install -Dm644 icons/endeavouros-logo-text-dark.png -t "${pkgdir}/usr/share/pixmaps"
+  install -Dm644 backgrounds/endeavouros-wallpaper-light.png "${pkgdir}/usr/share/endeavouros/backgrounds/endeavouros-wallpaper-light.png"
+  install -Dm644 backgrounds/endeavouros-wallpaper.png "${pkgdir}/usr/share/endeavouros/backgrounds/endeavouros-wallpaper.png"
+
+  # make symlinks for KDE and GNOME:
+  ln -s "/usr/share/pixmaps/endeavouros.png" "${pkgdir}/usr/share/pixmaps/endeavouros-logo.png"
+  ln -s "/usr/share/pixmaps/endeavouros.svg" "${pkgdir}/usr/share/pixmaps/endeavouros-logo.svg"
+  ln -s "/usr/share/pixmaps/endeavouros-dark.png" "${pkgdir}/usr/share/pixmaps/endeavouros-logo-dark.png"
+  ln -s "/usr/share/pixmaps/endeavouros-dark.svg" "${pkgdir}/usr/share/pixmaps/endeavouros-logo-dark.svg"
+
+  # cleanup
+  rm -f ../../${pkgver}.tar.gz
+}

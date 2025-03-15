@@ -56,8 +56,8 @@ _tr_add2 after_install_text   "Mitä tehdä asennuksen jälkeen$_question"
 _tr_add2 after_install_um     "Päivitä peilipalvelimet"
 _tr_add2 after_install_umtip  "Päivitä peilipalvelinten lista ennen järjestelmän päivitystä"
 
-_tr_add2 after_install_us     "Päivitä järjestelmäpaketit"
-_tr_add2 after_install_ustip  "Päivitä kaikki järjestelmän ohjelmistopaketit"
+_tr_add2 after_install_us     "Päivitä järjestelmäpaketit"                     # This definition is used by Welcome 24.11-1 and older.
+_tr_add2 after_install_ustip  "Päivitä kaikki järjestelmän ohjelmistopaketit"  # This definition is used by Welcome 24.11-1 and older.
 
 _tr_add2 after_install_dsi     "Tunnista/korjaa järjestelmäongelmia"
 _tr_add2 after_install_dsitip  "Tarkista tunnetut järjestelmäongelmat ja korjaa ne"
@@ -161,9 +161,11 @@ _tr_add2 issues_no               "Korjattavaa ei löydetty."
 _tr_add2 cal_noavail            "Ei saatavilla: "        # installer program
 _tr_add2 cal_warn               "Varoitus"
 _tr_add2 cal_info1              "Tämä on Community Development -julkaisu.\n"                                   # specials needed!
-_tr_add2 cal_info2              "<b>Offline</b> asentaa Xfce-työpöydän ja EndeavourOS-teeman.\nNettiyhteyttä ei tarvita.\n\n"
-_tr_add2 cal_info3              "<b>Online</b> antaa valita asennettavan työpöydän, johon tulee oletusteema.\nNettiyhteys tarvitaan.\n\n"
+_tr_add2 cal_info2              "<b>Offline</b> asentaa %%s-työpöydän.\nNettiyhteyttä ei tarvita.\n\n"
+_tr_add2 cal_info3              "<b>Online</b> antaa valita asennettavan työpöydän.\nNettiyhteys tarvitaan.\n\n"
 _tr_add2 cal_info4              "\nHUOM: Tätä julkaisua kehitetään jatkuvasti. Ole hyvä ja auta tekemään siitä parempi raportoimalla mahdolliset virheet.\n"
+_tr_add2 cal_info5              "\nAsennuksen jälkeen suositellaan järjestelmäpakettien päivittämistä.\n"
+_tr_add2 cal_info6              "\nAsennuksen jälkeen järjestelmäpaketit ovat ajan tasalla.\n\n"
 _tr_add2 cal_choose             "Valitse asennustapa"
 _tr_add2 cal_method             "Tapa"
 _tr_add2 cal_nosupport          "$PROGNAME: ei-tuettu tapa: "
@@ -331,9 +333,9 @@ _tr_add2 daily_assist_anews          "Viimeisimmät Arch-uutiset"
 _tr_add2 daily_assist_anewstip       "Viimeisimmät Arch-uutiset selaimessa"
 
 # 2022-Sep-25
-_tr_add2 nb_nofify_user1             "Tärkeitä uutisia saatavilla päivämäärällä"       # one (or more) dates, e.g. 2023-Feb-18
-_tr_add2 nb_nofify_user2             "Klikkaa nappia"                                  # Software News
-_tr_add2 nb_nofify_user3             "tämän ikkunan vasemmassa alalaidassa."
+_tr_add2 nb_notify_user1             "Tärkeitä uutisia saatavilla päivämäärällä"       # one (or more) dates, e.g. 2023-Feb-18
+_tr_add2 nb_notify_user2             "Klikkaa nappia"                                  # Software News
+_tr_add2 nb_notify_user3             "tämän ikkunan vasemmassa alalaidassa."
 
 # 2023-Feb-20
 _tr_add2 ins_customized              "Hae asennuksen muokkaustiedostosi (tehokäyttäjille)"
@@ -343,4 +345,50 @@ _tr_add2 ins_cust_text3              "Tämä on hyödyllisintä <b>online</b>-as
 
 # 2023-Mar-29
 _tr_add2 ins_no_connection           "Huom: internet-yhteys ei saatavilla, osa nappuloista on näkymättömissä tai ei toimi,"
+
+# 2023-Aug-25
+_tr_add2 ins_pmtip2             "Partitionmanager sallii levyn osioiden tutkimisen ja muokkaamisen (käytä tarvittaessa)"
+
+# 2023-Sep-16
+_tr_add2 ins_arm_start             "Asenna EndeavourOS ARM"
+_tr_add2 ins_arm_starttip          "Aloita EndeavourOS ARM:n asennus"
+
+# 2024-Apr-18
+_tr_add2 ins_conn_issue_title        "Miten jatketaan?"                                                                   # NOTE: '?' works in a yad title!
+_tr_add2 ins_conn_issue_text         "Internet-yhteyttä ei löytynyt (ehkä wifi ei ole vielä valmis${_question})"
+_tr_add2 ins_conn_issue_nm1          "Verkon hallintaohjelma"
+_tr_add2 ins_conn_issue_nm2          "Käynnistää verkon hallintaohjelman"
+_tr_add2 ins_conn_issue_oi1          "Offline-asennus"
+_tr_add2 ins_conn_issue_oi2          "Asentaa KDE:n ilman internet-yhteyttä (suositellaan systeemin päivitystä asennuksen jälkeen)"
+_tr_add2 ins_conn_issue_ex1          "Lopeta"
+_tr_add2 ins_conn_issue_ex2          "Lopeta tämä ohjelma"
+
+# 2024-Apr-20
+_tr_add2 ins_start_calamares         "Käynnistetään calamares"
+_tr_add2 ins_please_wait             "Odota hetki..."
+
+# 2024-Dec-05 (see also: 'after_install_us' and 'after_install_ustip' above)
+_tr_add2 after_install_usnat         "Päivitä systeemin natiivipaketit"
+_tr_add2 after_install_usnat_tip     "Päivittää paketit pakettivarastoista, katso /etc/pacman.conf"
+_tr_add2 after_install_usnataur      "Päivitä sekä natiivit että AUR:sta haetut paketit"
+_tr_add2 after_install_usnataur_tip  "Päivittää paketit pakettivarastoista, katso /etc/pacman.conf, sekä AUR:sta"
+_tr_add2 after_install_ushlp         "Päivitä sekä natiivit että AUR:sta haetut paketit"
+_tr_add2 after_install_ushlp_tip     "Päivittää paketit pakettivarastoista, katso /etc/pacman.conf, sekä AUR:sta käyttäen AUR-apuria"
+
+_tr_add2 after_install_umartip       "Päivitä Arch-peilipalvelinten lista ennen pakettien päivitystä"
+_tr_add2 after_install_umentip       "Päivitä EndeavourOS-peilipalvelinten lista ennen pakettien päivitystä"
+
+# 2024-Dec-06
+_tr_add2 after_install_reisub        "REISUB-tietoa"
+_tr_add2 after_install_reisub2       "REISUB: ota käyttöön"
+_tr_add2 after_install_reisubtip     "REISUB auttaa selviämään paremmin systeemin kaatumisesta"
+
+# 2024-Dec-06, take 2
+_tr_add2 _commonphrase_enabled       "otettu käyttöön"
+_tr_add2 _commonphrase_disabled      "poistettu käytöstä"
+
+# 2024-Dec-10
+_tr_add2 arch_chroot                 "Tietoa arch-chroot:sta"
+_tr_add2 arch_chroot_tip             "arch-chroot sallii pääsyn systeemiin esim. ongelmatilanteissa"
+_tr_add2 _commonphrase_not_found     "%%s ei saatavilla"                                                   # example usage: "file1.txt not found"
 

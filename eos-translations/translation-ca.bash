@@ -164,6 +164,8 @@ _tr_add2 cal_info1              "Aquesta és una versió de desenvolupament de l
 _tr_add2 cal_info2              "El mètode <b>fora de línia</b> ofereix un escriptori Xfce amb temàtica d'EndeavourOS.\nNo cal connexió a Internet.\n\n"
 _tr_add2 cal_info3              "El mètode <b>en línia</b> permet triar l'escriptori, amb el tema d'origen.\nCal connexió a Internet.\n\n"
 _tr_add2 cal_info4              "Si us plau, tingueu en compte que aquesta versió és un treball en curs; si us plau, ajudeu-nos a fer-la estable informant d'errors.\n"
+_tr_add2 cal_info5              "\nDesprés de la instal·lació, és recomanat actualitzar el sistema.\n\n"
+_tr_add2 cal_info6              "\nDesprés de la instal·lació, el sistema està actualitzat.\n\n"
 _tr_add2 cal_choose             "Trieu el mètode d'instal·lació."
 _tr_add2 cal_method             "Mètode"
 _tr_add2 cal_nosupport          "$PROGNAME: mode no admès: "
@@ -257,7 +259,7 @@ _tr_add2 after_install_ewtip2     "Selector de fons de pantalla"                
 #       - line 250: changed text of 'after_install_ewtip2'
 
 # 2020-Oct-23:
-_tr_add2 updt_update_check        "- Comprovació d'actualitzacions"
+_tr_add2 updt_update_check        "Comprovació d'actualitzacions"
 _tr_add2 updt_searching           "Se cerca a"
 _tr_add2 updt_for_updates         "si hi ha actualitzacions"
 _tr_add2 updt_failure             "Ha fallat$_exclamation"
@@ -275,7 +277,7 @@ _tr_add2 after_install_pacdiff_tip "Gestioneu fitxers pacnew, pacorig i pacsave 
 _tr_add2 after_install_conf           "Configuració del dimoni"                             # a starting verb on a sentence "Configure eos-update-notifier"
 _tr_add2 after_install_more_wall      "Baixeu més fons de pantalla de l'EndeavourOS"
 _tr_add2 after_install_more_wall_tip  "Baixeu fons de pantalla de llegat i de la comunitat de l'EndeavourOS."
-_tr_add2 after_install_info           "-> informació"                           # last word on a sentence, means just any information
+_tr_add2 after_install_info           ": informació"                           # last word on a sentence, means just any information
 
 _tr_add2 butt_softnews                "Notícies de programari"
 _tr_add2 butt_softnews_tip            "Notícies importants sobre el programari de l'EndeavourOS"
@@ -307,7 +309,7 @@ _tr_add2 after_install_r8168         "Problema amb la xarxa amb fil$_question Ca
 _tr_add2 after_install_r8168_tip     "Canvia entre els controladors r8168 i r8169 (pot ser que calgui reiniciar)."           # changed 2021-Dec-14 !!
 
 # 2021-Oct-08
-_tr_add2 daily_assist_DEinfo         "informació"                                         # assume prefix "DE:", e.g.: "Xfce: information"
+_tr_add2 daily_assist_DEinfo         ": informació"                                         # assume prefix "DE:", e.g.: "Xfce: information"
 _tr_add2 daily_assist_DEinfo_tip     "més informació sobre aquest gestor d'escriptori / finestres"  # assume prefix "DE:", e.g.: "Xfce: more information ..."
 
 # 2022-Feb-16
@@ -331,7 +333,61 @@ _tr_add2 daily_assist_anews          "Darreres notícies sobre l'Arch"
 _tr_add2 daily_assist_anewstip       "Mostra les darreres notícies de l'Arch en un navegador."
 
 # 2022-Sep-25
-_tr_add2 nb_nofify_user1             "Hi ha notícies importants a"
-_tr_add2 nb_nofify_user2             "Si us plau, cliqueu al botó"                                  # Software News
-_tr_add2 nb_nofify_user3             "del cantó de baix a l'esquerra d'aquesta finestra."
+_tr_add2 nb_notify_user1             "Hi ha notícies importants:"
+_tr_add2 nb_notify_user2             "Si us plau, cliqueu al botó"                                  # Software News
+_tr_add2 nb_notify_user3             "del cantó de baix a l'esquerra d'aquesta finestra."
 
+# 2023-Feb-20
+_tr_add2 ins_customized              "Obteniu el vostre fitxer de personalització d'instal·lació (avançat)"
+_tr_add2 ins_cust_text               "Doneu l'URL del vostre user_commands.bash personalitzat"
+_tr_add2 ins_cust_text2              "El fitxer obtingut substituirà ~/user_commands.bash"
+_tr_add2 ins_cust_text3              "Això és molt útil per a la instal·lació <b>en línia</b>"
+
+# 2023-Mar-29
+_tr_add2 ins_no_connection           "Nota: no hi ha connexió a Internet disponible, alguns botons estan ocults o no funcionen."
+
+# 2023-Aug-25
+_tr_add2 ins_pmtip2                  "Partitionmanager permet examinar i gestionar les particions i l'estructura del disc"
+
+# 2023-Sep-16
+_tr_add2 ins_arm_start             "Instal·lador de la imatge EndeavourOS ARM"
+_tr_add2 ins_arm_starttip          "Comença la instal·lació de l'edició EndeavourOS ARM"
+
+# 2024-Apr-18
+_tr_add2 ins_conn_issue_title        "I ara què?"                                                                   # NOTE: '?' works in a yad title!
+_tr_add2 ins_conn_issue_text         "No s'ha trobat cap connexió a internet (potser la wifi no està a punt${_question})"
+_tr_add2 ins_conn_issue_nm1          "Gestor de xarxes"
+_tr_add2 ins_conn_issue_nm2          "Incia el Gestor de xarxes"
+_tr_add2 ins_conn_issue_oi1          "Instal·lació fora de línia"
+_tr_add2 ins_conn_issue_oi2          "Instal·la el KDE sense connexió a internet (es recomana actualizar el sistema després de la instal·lació)"
+_tr_add2 ins_conn_issue_ex1          "Surt"
+_tr_add2 ins_conn_issue_ex2          "Surt d'aquest programa."
+
+# 2024-Apr-20
+_tr_add2 ins_start_calamares         "S'inicia el Calamares"
+_tr_add2 ins_please_wait             "Espereu, si us plau..."
+
+# 2024-Dec-05 (see also: 'after_install_us' and 'after_install_ustip' above)
+_tr_add2 after_install_usnat         "Actualitza els paquets nadius"
+_tr_add2 after_install_usnat_tip     "Actualitza els paquets dels repositoris de /etc/pacman.conf."
+_tr_add2 after_install_usnataur      "Actualitza els paquets nadius i els de l'AUR"
+_tr_add2 after_install_usnataur_tip  "Actualitza els paquets dels repositoris de /etc/pacman.conf i de l'AUR."
+_tr_add2 after_install_ushlp         "Actualitza els paquets nadius i els de l'AUR"
+_tr_add2 after_install_ushlp_tip     "Actualitza els paquets dels repositoris de /etc/pacman.conf i de l'AUR amb un assistent de l'AUR."
+
+_tr_add2 after_install_umartip       "Actualitza la llista de les rèpliques de l'Arch abans d'actualitzar els paquets."
+_tr_add2 after_install_umentip       "Actualitza la llista de les rèpliques de l'EndeavourOS abans d'actualitzar els paquets."
+
+# 2024-Dec-06
+_tr_add2 after_install_reisub        "Informació sobre REISUB"
+_tr_add2 after_install_reisub2       "Habilita REISUB"
+_tr_add2 after_install_reisubtip     "REISUB ajuda a gestionar una fallada del sistema."
+
+# 2024-Dec-06, take 2
+_tr_add2 _commonphrase_enabled       "habilitat"
+_tr_add2 _commonphrase_disabled      "inhabilitat"
+
+# 2024-Dec-10
+_tr_add2 arch_chroot                 "Informació sobre arch-chroot"
+_tr_add2 arch_chroot_tip             "L'eina arch-chroot proporciona un accés de línia d'ordres a un altre sistema."
+_tr_add2 _commonphrase_not_found     "No s'ha trobat %%s."                                                   # example usage: "file1.txt not found"

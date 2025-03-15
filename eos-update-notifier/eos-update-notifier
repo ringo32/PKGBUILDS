@@ -2,16 +2,6 @@
 #
 # EOS update notifier for the current user.
 #
-# The package includes the following files:
-#     eos-update-notifier             (this file)
-#     eos-update-notifier.conf        (configuration file)
-#     eos-update-notifier.desktop     (initializes the systemd service for the current user)
-#     eos-update-notifier.service     (systemd service)
-#     eos-update-notifier.timer       (systemd timer)
-#     /tmp/eos-update-notifier.log.*  (temporary log file, re-created at every invocation)
-#     arch-news-for-you               (show Arch news relevant for you)
-#     eos-arch-news                   (show Arch news; showing is based on date only)
-#
 
 #######################################################################
 EOS_SCRIPTS_YAD=/usr/share/endeavouros/scripts/eos-script-lib-yad
@@ -63,7 +53,7 @@ YadNonFocused() {
 
 ShowTray() {
     # Tray notification may have issues on EOS...
-    eos_yad --notification --image="$_UpdateNotifyIcon" \
+    eos_yad --notification --image="$ICO_UPDATE_AVAILABLE" \
             --text="$progname: $update_count $source updates are available at $date"
 }
 ShowNotify() {
@@ -89,7 +79,7 @@ ShowNotify() {
             local bop=update
             local bname=Update
             local action=$(eos_notification \
-                               "$_UpdateNotifyIcon" \
+                               "$ICO_UPDATE_AVAILABLE" \
                                "normal" \
                                "$expiretime" \
                                "EndeavourOS Update Notifier" \
@@ -104,7 +94,7 @@ ShowNotify() {
                         UpdateInTerminal --nt --updates=$tmp_ufile
                     else
                         if [ "$CheckAurUpdates" = "yes" ] ; then
-                            RunInTerminal eos-update --yay
+                            RunInTerminal eos-update --${AurUpdaterProg##*/}
                         else
                             RunInTerminal eos-update
                         fi
@@ -114,7 +104,7 @@ ShowNotify() {
             ;;
         "notify+tray")
             eos_notification \
-                "$_UpdateNotifyIcon" \
+                "$ICO_UPDATE_AVAILABLE" \
                 "normal" \
                 "$expiretime" \
                 "EndeavourOS Update Notifier" \
@@ -128,13 +118,6 @@ ShowNonFocused() {
     local date="$(/usr/bin/date '+%x %X')"
     local source="$1"
     local pkgs="\n<tt>$updates</tt>"        # for notify and notify+tray
-    local _UpdateNotifyIcon
-
-    if [ -n "UpdateNotifyIcon" ] ; then
-        _UpdateNotifyIcon="$UpdateNotifyIcon"
-    else
-        _UpdateNotifyIcon=system-software-update
-    fi
 
     if [ "$pkgsonly" = "yes" ] ; then       # cmd line options override config file options
         ShowHowAboutUpdates=window
@@ -216,20 +199,22 @@ Update_common() {
     GetUpdateCount
 
     if [ -n "$updates" ] ; then
-        local retvalue=0
-        local tmpfile=$(mktemp)
-        eos-kernel-nvidia-update-check $(echo "$updates" | tail -n +3 | awk '{print $1}') 2> $tmpfile || {
-            cat $tmpfile | eos_yad_problem "Warning" --text="Update conflict detected. Do you want to continue (not recommended)?" \
-                                           --width=800 --height=300 \
-                                           --button=' Continue!system-run!Ignore this warning and continue':2
-            retvalue=$?
-            case "$retvalue" in
-                0) retvalue=1 ;;    # eos_yad_problem returns 0 when quitting!
-                *) retvalue=0 ;;    # the above code returns 2 when continuing
-            esac
-        }
-        rm -f $tmpfile
-        [ $retvalue -ne 0 ] && exit 1
+        if lsmod | grep -w ^nvidia >/dev/null ; then
+            local retvalue=0
+            local tmpfile=$(mktemp)
+            eos-kernel-nvidia-update-check --no-color $(echo "$updates" | tail -n +3 | awk '{print $1}') 2> $tmpfile || {
+                cat $tmpfile | eos_yad_problem "Warning" --text="Update conflict detected. Do you want to continue (not recommended)?" \
+                                               --width=800 --height=300 \
+                                               --button=' Continue!$ICO_OPERATION_TEST!Ignore this warning and continue':2
+                retvalue=$?
+                case "$retvalue" in
+                    0) retvalue=1 ;;    # eos_yad_problem returns 0 when quitting!
+                    *) retvalue=0 ;;    # the above code returns 2 when continuing
+                esac
+            }
+            rm -f $tmpfile
+            [ $retvalue -ne 0 ] && exit 1
+        fi
 
         if [ $update_focused -eq 0 ] ; then
             SystemLockActive b || return
@@ -305,47 +290,13 @@ Update_common() {
                 eos_yad --form \
                         --title="EndeavourOS update notifier" --text="$msg" \
                         --timeout=10 --timeout-indicator=left \
-                        --image=dialog-information --width=350 --no-focus \
+                        --image="$ICO_INFO" --width=350 --no-focus \
                         --button=yad-quit:0
             else
                 echo "$msg" | \
                     eos_yad --text-info --title="EndeavourOS update notifier" --no-focus \
                             --height=100 --width=350 --timeout=10 --timeout-indicator=left \
-                            --theme="Classic" --tail --button=yad-quit:0 --image=info
-            fi
-        fi
-    fi
-}
-
-CheckArchNews() {
-    if [ "$AllowNewsCheckWhileUpdating" = "no" ] ; then
-        test -e $system_lockfile && return
-    fi
-
-    test -n "$CheckArchNewsForYou" || CheckArchNewsForYou=yes
-    test -n "$ArchNewsProg"        || ArchNewsProg=arch-news-for-you          # original default
-
-    if [ "$CheckArchNewsForYou" = "yes" ] ; then
-        local tmpdays=hide
-        case "$ArchNewsProg" in
-            eos-arch-news)
-                # eos-arch-news does not (yet) use $newsdays ...
-                tmpdays="--save"
-                ;;
-            arch-news-for-you)
-                if [ "$newsdays" -gt 0 ] ; then
-                    tmpdays="$newsdays"
-                fi
-                ;;
-            *)
-                log2 "Warning: configuration problem with variable 'ArchNewsProg'. Please check file '$EOS_UPDATE_NOTIFIER_CONF'."
-                ;;
-        esac
-        if [ "$tmpdays" != "hide" ] ; then
-            if [ "$verbosity" = "high" ] ; then
-                $ArchNewsProg $tmpdays
-            else
-                $ArchNewsProg $tmpdays 2>/dev/null
+                            --theme="Classic" --tail --button=yad-quit:0 --image="$ICO_INFO"
             fi
         fi
     fi
@@ -373,8 +324,9 @@ CheckTimeoutVal() {
 
 Main2() {
     local CheckAurUpdates=yes
-    local CheckArchNewsForYou=yes
-    local ArchNewsProg=eos-arch-news
+    # local CheckArchNewsForYou=yes
+    # local ArchNewsProg=eos-arch-news
+    # local ShowArchNewsPage=no
     local UN_NotifyTimeout=30s
     local UN_NotifyTrayTimeout=30s
     local SyncAfterUpdate=no
@@ -386,16 +338,10 @@ Main2() {
 
     [ -n "$AurUpdaterProg" ] || AurUpdaterProg=yay
 
-    [ -r $EOS_UPDATE_NOTIFIER_CONF ] && source $EOS_UPDATE_NOTIFIER_CONF
-
     CheckTimeoutVal UN_NotifyTimeout
     CheckTimeoutVal UN_NotifyTrayTimeout
 
     # Config file values should be OK.
-
-    if [ "$pkgsonly" = "no" ] ; then
-        CheckArchNews
-    fi
 
     # check package manager lock
     SystemLockActive a || return
@@ -454,13 +400,21 @@ Initialize() {    # initialize service and timer for the current user
         test "$fetch_files" = "1" && UseInitialFiles "$configdir" "$progname"
         case "$arg" in
             -conf | --conf)
-                # add any missing setting
-                [ -n "$(grep "^Persistent="   "$timer")" ] || sed -i "$timer" -e "/^\[Timer\]/a \Persistent=$persistent"
-                [ -n "$(grep "^OnCalendar="   "$timer")" ] || sed -i "$timer" -e "/^\[Timer\]/a \OnCalendar=$oncalendar"
-                [ -n "$(grep "^OnStartupSec=" "$timer")" ] || sed -i "$timer" -e "/^\[Timer\]/a \OnStartupSec=$onstartupsec"
+                # add any missing setting under [Timer] (in reverse order)
+                [ -n "$(grep ".*RandomizedDelaySec="   "$timer")" ] || sed -i "$timer" -e "/^\[Timer\]/a \RandomizedDelaySec=$randomizeddelaysec"
+                [ -n "$(grep ".*Persistent="           "$timer")" ] || sed -i "$timer" -e "/^\[Timer\]/a \Persistent=$persistent"
+                [ -n "$(grep ".*OnCalendar="           "$timer")" ] || sed -i "$timer" -e "/^\[Timer\]/a \OnCalendar=$oncalendar"
+                [ -n "$(grep ".*OnStartupSec="         "$timer")" ] || sed -i "$timer" -e "/^\[Timer\]/a \OnStartupSec=$onstartupsec"
+
+                # remove possible old stuff
+                sed -i "$timer" -e "s|^# Persistent=true||"
+
                 # write new settings
+                case "${onstartupsec,,}" in
+                    ""|false) sed -E -i "$timer" -e "s|.*OnStartupSec=.*|# OnStartupSec=|" ;;
+                    *)        sed -E -i "$timer" -e "s|.*OnStartupSec=.*|OnStartupSec=30sec|" ;;
+                esac
                 sed -i "$timer" \
-                    -e "s|^OnStartupSec=.*|OnStartupSec=$onstartupsec|" \
                     -e 's|^OnCalendar=.*$|OnCalendar='"$oncalendar"'|' \
                     -e "s|^Persistent=.*|Persistent=$persistent|"
                 ;;
@@ -510,23 +464,28 @@ Configure() {
                 *) oncalendar=daily ;;
             esac
             times=$(echo "$times" | sed "s|$oncalendar|^$oncalendar|")
+            # temporarily set this to boolean value:
+            case "${onstartupsec,,}" in
+                ""|false) onstartupsec=false ;;
+                *)        onstartupsec=true ;;
+            esac
             cmd=(
                 eos_yad
                 --form
                 --title="Configure update checking"
                 --text="$progname: configure the schedule of system update checks."
-                --image=preferences-system
-                --field="First check after system startup!See <b>man systemd.time</b> how to set time" "$onstartupsec"
+                --image="$ICO_PREFERENCES_SYSTEM"
                 --field="Check period!How often checks will be executed":CB "$times"
-                --field="Persistent!If selected and checks are missed, a check will be done at next login":CHK "$persistent"
+                --field="Check always after system startup!Enable/disable update check right after boot":CHK "$onstartupsec"
+                --field="Persistent!When selected, if a check is missed, the check will be executed as soon as possible":CHK "$persistent"
                 --button=yad-ok
             )
             result=$("${cmd[@]}")
             retval=$?
             [ "$retval" -eq 0 ] || return 1
 
-            onstartupsec=$(echo "$result" | cut -d'|' -f1)
-            oncalendar=$(  echo "$result" | cut -d'|' -f2)
+            oncalendar=$(  echo "$result" | cut -d'|' -f1)
+            onstartupsec=$(echo "$result" | cut -d'|' -f2)
             persistent=$(  echo "$result" | cut -d'|' -f3 | tr '[:upper:]' '[:lower:]')
             ;;
         1)
@@ -541,7 +500,7 @@ Configure() {
             local defaultperiod=daily
             cmd=(
                 eos_yad --list --radiolist --column=Select --column=Period --width=400 --height=250
-                --image=preferences-system
+                --image="$ICO_PREFERENCES_SYSTEM"
                 --title="Configure update check schedule"
                 --text="Select the period for system updates"
                 --button="Set to default":10 --button=yad-cancel:1 --button=yad-ok:0
@@ -640,11 +599,6 @@ Options:
                 Default: $iwt.
    -nw=X        Max time (seconds) to show the "No updates available" window.
                 Default: $no_updates__indicator_wait_time.
-   -news=X      Show the 'Arch latest news for you' within the last X days.
-                If X is 0, then no news are displayed.
-                Default: X is $newsdays.
-                Note: this has effect only if configuration ArchNewsProg is
-                'arch-news-for-you'.
    -q           Be quieter with dialogs.
    --changelog  Show the changelog of this package.
 EOF
@@ -668,7 +622,7 @@ yad_infomsg() {
     local title="$2"
     test -n "$title" || title="Info"
     echo2 "$title: $msg"
-    eos_yad --form --text="$msg" --title="$title" --button=yad-ok:0 --image=info
+    eos_yad --form --text="$msg" --title="$title" --button=yad-ok:0 --image="$ICO_INFO"
 }
 
 Main()
@@ -679,6 +633,10 @@ Main()
         echo "==> Stopping $progname while installing."
         return 0
     fi
+
+    AssignIconVariables_in_eos_bash_shared                                  # get common icons
+
+    yad_missing_check $progname
 
     local dev_log=no
     local dev_logfile=/tmp/$progname.dev_log
@@ -697,13 +655,17 @@ Main()
     local EOS_UPDATE_NOTIFIER_CONF=/etc/$progname.conf
     #local NOTIFIER_LOG_FILE=/tmp/$progname.log
 
-    local oncalendar="$(  grep "^OnCalendar="   $configdir/$progname.timer 2>/dev/null | cut -d '=' -f 2)"
-    local onstartupsec="$(grep "^OnStartupSec=" $configdir/$progname.timer 2>/dev/null | cut -d '=' -f 2)"
-    local persistent="$(  grep "^Persistent="   $configdir/$progname.timer 2>/dev/null | cut -d '=' -f 2)"
+    local oncalendar="$(  grep ".*OnCalendar="   $configdir/$progname.timer 2>/dev/null | cut -d '=' -f 2)"
+    local onstartupsec="$(grep ".*OnStartupSec=" $configdir/$progname.timer 2>/dev/null | cut -d '=' -f 2)"
+    local persistent="$(  grep ".*Persistent="   $configdir/$progname.timer 2>/dev/null | cut -d '=' -f 2)"
+    local -r randomizeddelaysec=10min
 
     [ -n "$oncalendar" ]   || oncalendar=daily
-    [ -n "$onstartupsec" ] || onstartupsec=30sec
     [ -n "$persistent" ]   || persistent=false
+    case "${onstartupsec,,}" in
+        ""|false) onstartupsec="" ;;
+        *)        onstartupsec=30sec ;;
+    esac
 
     mkdir -p "$configdir"
 
@@ -711,6 +673,14 @@ Main()
     export EOS_UPDATE_NOTIFIER_LOG=$(mktemp /tmp/$progname.log.XXXXXXXX)
 
     DevLog "main loop starting"
+
+    [ -r $EOS_UPDATE_NOTIFIER_CONF ] && source $EOS_UPDATE_NOTIFIER_CONF
+
+    # ICO_UPDATE_AVAILABLE=$(eos_icon_path apps software-update-available)    # app specific icons
+    case "$UpdateNotifyIcon" in
+        /*) ICO_UPDATE_AVAILABLE="$UpdateNotifyIcon" ;;                        # ICO_UPDATE_AVAILABLE=/usr/share/icons/Qogir/scalable/apps/software-update-available.svg
+        *)  ICO_UPDATE_AVAILABLE=$(eos_icon_path apps "$UpdateNotifyIcon") ;;
+    esac
 
     for arg in "$@" ; do
         case "$arg" in
@@ -723,7 +693,7 @@ Main()
                 return
                 ;;
             -show-timer | --show-timer)
-                RunInTerminal "systemctl --user status eos-update-notifier.timer | cat -"
+                RunInTerminal "systemctl --user status eos-update-notifier.timer"
                 return
                 ;;
             --changelog)

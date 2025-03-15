@@ -3,11 +3,9 @@ Operation = Install
 Operation = Upgrade
 Operation = Remove
 Type = Package
-Target = nvidia-dkms
 Target = nvidia
 Target = nvidia-lts
-Target = nvidia-470xx-dkms
-Target = nvidia-390xx-dkms
+Target = nvidia-open
 
 [Action]
 When = PostTransaction

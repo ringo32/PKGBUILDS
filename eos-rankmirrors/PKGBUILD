@@ -1,7 +1,7 @@
 # Maintainer: EndeavourOS <info@endeavouros.com>
 
 pkgname=eos-rankmirrors
-pkgver=2.16
+pkgver=25.3
 pkgrel=1
 pkgdesc="EndeavourOS mirror ranking tool"
 arch=('any')
@@ -17,25 +17,28 @@ backup=(etc/$pkgname.conf)
 source=(
   $url/$pkgname
   $url/$pkgname.completion
-  $url/eos-rankmirrors-from-hook
-  $url/eos-rankmirrors.hook
-  $url/eos-rankmirrors.conf
+  $url/${pkgname}-from-hook
+  $url/${pkgname}.hook
+  $url/${pkgname}.conf
+  $url/${pkgname}.disabled
 )
-sha512sums=('bbebae66df3a853a62b5acc46240ef72c44de33f913c2f2f4c61f73bd604139e70f9b264ffbc20571b7f0f975704d6fd3a984e42a440a750dd8d02523cf7855d'
-            'e0cc7bbd4644574810c19b18cb57098f62011aeb2f5b115a16d78489efbf7f74eab411bd31eaf233e4380916b4890472dd23e17ccc0ef4a0f456321c414dc9e2'
-            '580511c676cf56b5b8580d6819e0d1a4c85a40a3cd10f4b4f04fb9c004b14025b56cf4c3048e0fe8f9eef48d924b32b97d1e9669fac39b96f4203e2d68e3bd07'
+sha512sums=('a42edae5f693723f287647dcf19b1a92c96896483250b22b5ce679b867b19b564f21f35c51d1a7df284f3518f7bb16f01e8aa25cbb2faecf8116d5ccc9ac0521'
+            'e945c073d46abf35d9cf9042c7906bf9a1bad73760e0f06fb42c59227cf0ef1e3ea9ceeb9dc3b2185b0a37711e7b698dd28565be62e21a7bddb5f3b4a2daeee4'
+            'fc3113a20559ec58ffff2cacae8069ce5c83ad826f0054488315d024cb874a92ae9240fe4630bd9da647ee2cbf0e93dd22259190c703f26d21bf0b8481686a4c'
             'f01f6267f624992febfec29c76f2de1c503693086ade5783e2b9cbef359f5155bf6df520ff06299193c842aef2a05cac5078977ee0dabf55cff66f44aec6e44a'
-            '226111836a42e3540c714105813f64b285b3c48d41ea058e7339ba5b2de530a691d753b8f6d10984d260ed3288b01539715b00ad9bef4d808d21303c936837e7')
+            'fd315acf35a5e699caffe1e7d47660b5544b7d84e653106efd0074351a92cd8447e148b22d4ee999a76a135b13c41f927b733036f842c487de2ed40b35723cda'
+            '06b77d1109fec45071dd2a3c1be07c225a5735961bd2818d0ccea608fef6e85bf4ae71d821427aa766d5b1934195282c1964965df7bd49602316b3bab6bf9824')
 
 package() {
   local hooks=$pkgdir/usr/share/libalpm/hooks
 
-  install -Dm644 eos-rankmirrors.hook      $hooks/eos-rankmirrors.hook
+  install -Dm644 ${pkgname}.hook      $hooks/${pkgname}.hook
 
-  install -Dm644 eos-rankmirrors.conf      $pkgdir/etc/eos-rankmirrors.conf
+  install -Dm644 ${pkgname}.conf      $pkgdir/etc/${pkgname}.conf
+  install -Dm644 ${pkgname}.disabled  $pkgdir/etc/${pkgname}.disabled
 
-  install -Dm755 $pkgname                  $pkgdir/usr/bin/$pkgname
-  install -Dm755 eos-rankmirrors-from-hook $pkgdir/usr/bin/eos-rankmirrors-from-hook
+  install -Dm755 $pkgname             $pkgdir/usr/bin/$pkgname
+  install -Dm755 ${pkgname}-from-hook $pkgdir/usr/bin/${pkgname}-from-hook
 
-  install -Dm644 $pkgname.completion       $pkgdir/usr/share/bash-completion/completions/$pkgname
+  install -Dm644 $pkgname.completion  $pkgdir/usr/share/bash-completion/completions/$pkgname
 }

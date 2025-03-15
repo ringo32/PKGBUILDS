@@ -3,33 +3,44 @@
 # Contributor: joekamprad <joekamprad@endeavouros.com>
 
 pkgname=nvidia-inst
-pkgver=23
-pkgrel=7
-pkgdesc="Script to setup nvidia drivers (dkms version) in EndeavourOS"
+pkgver=25.2
+pkgrel=1
+pkgdesc="Script to install/uninstall nvidia driver packages in EndeavourOS"
 url=https://github.com/endeavouros-team/PKGBUILDS/tree/master/$pkgname
 _url=https://raw.githubusercontent.com/endeavouros-team/PKGBUILDS/master/$pkgname
 arch=('any')
 license=('GPL2')
-replaces=('nvidia-installer-dkms' 'nvidia-installer-db')
-depends=(
-  nvidia-installer-common
-  dkms
-)
+replaces=(nvidia-installer-dkms nvidia-installer-db nvidia-installer-common)
+conflicts=(nvidia-installer-common)
+depends=()
 optdepends=(
-  "linux-headers: for $pkgname with kernel linux"
-  "linux-lts-headers: for $pkgname with kernel linux-lts"
-  "linux-hardened-headers: for $pkgname with kernel linux-hardened"
-  "linux-zen-headers: for $pkgname with kernel linux-zen"
+  "linux-headers: needed by nvidia-dkms or nvidia-open-dkms"
+  "linux-lts-headers: needed by nvidia-dkms or nvidia-open-dkms"
+  "linux-hardened-headers: needed by nvidia-dkms or nvidia-open-dkms"
+  "linux-zen-headers: needed by nvidia-dkms or nvidia-open-dkms"
+  "dkms: for the dkms versions of the proprietary Nvidia drivers"
+  "expac: faster way for finding available package versions"
 )
 
 source=(
-  $_url/$pkgname
-  $_url/$pkgname.bash-completion
+  $_url/nvidia-inst
+  $_url/nvidia-inst.bash-completion
+  $_url/nvidia-installer-kernel-para
+  $_url/nvidia-driver-supported-branches
 )
-sha512sums=('4cc5051ad4263a9ce276c7f5ee3fe4860e806d2aee76cc0c52d5761633f1419aadc5a0e594b080c6f0dc2ea173612f55e6de5a13de5dbdc665b3e74e520aee4c'
-            'b8857ff98870ac8cff78e31c660bde3b7308752ee4e6547682340866ee59f5801f09ede41e490380a40926536f47259f5d347fd59e8e2ffa67a8cb57f07c44e6')
+sha512sums=('242f2426110e6535f8e3c71e3b94ff61a444878ea528bff46cc09966fe20193d1f9f28630f1a628eacc50f1815118b03ebcbcbb7d87e74ab38b76381731b5aa0'
+            'b8857ff98870ac8cff78e31c660bde3b7308752ee4e6547682340866ee59f5801f09ede41e490380a40926536f47259f5d347fd59e8e2ffa67a8cb57f07c44e6'
+            '8ee3fadd5c5c3f82d8f7c0b9273c7c970fe67486e5bcba5edae5dc7d997cd3aeb334fe8e76576b824187072c314dffcfd9cc01f2fdc46213001a6b997d720bb0'
+            '429c18ecf23d56b9b996b5e48884365324b713d48cfeab09e48753cfa8afdf79516a753058f6a0b6acaaca7c6f4a690dc5816c53c5f0ad3682291f481b6e1c5d')
 
 package() {
-  install -Dm755 $pkgname                         $pkgdir/usr/bin/$pkgname
-  install -Dm644 $pkgname.bash-completion         $pkgdir/usr/share/bash-completion/completions/$pkgname
+    local src file
+
+    for src in "${source[@]}" ; do
+        file="${src##*/}"
+        case "$src" in
+            *.bash-completion) install -Dm644 "$file"  "$pkgdir/usr/share/bash-completion/completions/${file%.*}" ;;
+            *)                 install -Dm755 "$file"  "$pkgdir/usr/bin/$file"
+        esac
+    done
 }

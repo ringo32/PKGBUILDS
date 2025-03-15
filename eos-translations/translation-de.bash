@@ -161,9 +161,11 @@ _tr_add2 issues_no               "Es wurden keine wichtigen Systemprobleme festg
 _tr_add2 cal_noavail            "Nicht verfügbar: "        # installer program
 _tr_add2 cal_warn               "Warnung"
 _tr_add2 cal_info1              "Dies ist eine Community-Entwicklungsversion.\n\n"                                   # specials needed!
-_tr_add2 cal_info2              "<b>Offline</b>Mit dieser Methode erhältst du einen Xfce4-Desktop mit EndeavourOS-Theme.\nEs ist keine Internetverbindung erforderlich.\n\n"
-_tr_add2 cal_info3              "<b>Online</b>Mit dieser Methode kannst du eine der Desktop-Umgebungen ohne verändertes Thema auswählen.\nEs wird eine Internetverbindung benötigt.\n\n"
+_tr_add2 cal_info2              "<b>Offline</b>Mit dieser Methode erhältst du den %%s Desktop.\nEs ist keine Internetverbindung erforderlich.\n\n"
+_tr_add2 cal_info3              "<b>Online</b>Mit dieser Methode kannst du eine der Desktop-Umgebungen auswählen.\nEs wird eine Internetverbindung benötigt.\n\n"
 _tr_add2 cal_info4              "Bitte beachte: Diese Version liefert einen unfertigen Zustand. Bitte hilf uns sie stabil zu machen, indem du uns Fehler meldest.\n"
+_tr_add2 cal_info5              "\nNach der Installation bitte das System updaten.\n\n"
+_tr_add2 cal_info6              "\nNach der Installation ist das System up-to-date.\n\n"
 _tr_add2 cal_choose             "Wähle die Installationsmethode"
 _tr_add2 cal_method             "Methode"
 _tr_add2 cal_nosupport          "$PROGNAME: Methode nicht unterstützt: "
@@ -177,7 +179,7 @@ _tr_add2 tail_buttip            "Nur dieses Fenster schließen"
 
 _tr_add2 ins_text              "EndeavourOS auf der Festplatte installieren"
 _tr_add2 ins_start             "Das Installationsprogramm starten"
-_tr_add2 ins_starttip          "Starte das EndeavourOS-Installationsprogramm zusammen mit einem Terminal zur Fehlersuche"
+_tr_add2 ins_starttip          "Starte das EndeavourOS-Installationsprogramm (wähle aus populären Desktop Umgebungen)"
 _tr_add2 ins_up                "Dieses Programm aktualisieren$_exclamation"
 _tr_add2 ins_uptip             "Aktualisiert dieses Programm startet es neu"
 _tr_add2 ins_keys              "Pacman-Schlüssel initialisieren"
@@ -255,6 +257,7 @@ _tr_add2 after_install_ewtip2   "Bildschirmhintergrund-Auswahl"
 #       - line 72:  changed text of 'after_install_ewtip'
 #       - line 249: changed text of 'after_install_ew2'
 #       - line 250: changed text of 'after_install_ewtip2'
+
 # 2020-Oct-23:
 _tr_add2 updt_update_check        "Update-Check"
 _tr_add2 updt_searching           "Suche"
@@ -333,9 +336,9 @@ _tr_add2 daily_assist_anewstip       "Zeigt Neuigkeiten über Arch Linux im Brow
 
 
 # 2022-Sep-25
-_tr_add2 nb_nofify_user1             "Wichtige Neuigkeiten"
-_tr_add2 nb_nofify_user2             "Bitte klicke auf die"                                  # Software News
-_tr_add2 nb_nofify_user3             "Schaltfläche, links unten im Fenster."
+_tr_add2 nb_notify_user1             "Wichtige Neuigkeiten"
+_tr_add2 nb_notify_user2             "Bitte klicke auf die"                                  # Software News
+_tr_add2 nb_notify_user3             "Schaltfläche, links unten im Fenster."
 
 # 2023-Feb-20
 _tr_add2 ins_customized              "Lade eine Konfigurations Datei (anspruchsvoll)"
@@ -345,3 +348,50 @@ _tr_add2 ins_cust_text3              "Diese Methode ist nur für die <b>online</
 
 # 2023-Mar-29
 _tr_add2 ins_no_connection           "Achtung: Keine Internetverbindung verfügbar, einige Schaltflächen fehlen oder funktionieren nicht."
+
+# 2023-Aug-25
+_tr_add2 ins_pmtip2                  "Der Partitionmanager ermöglicht das Untersuchen und Verwalten von Festplattenpartitionen und Aufbau"
+
+# 2023-Sep-16
+_tr_add2 ins_arm_start             "EndeavourOS ARM Image Installationsprogramm"
+_tr_add2 ins_arm_starttip          "Installation der EndeavourOS ARM Variante"
+
+# 2024-Apr-18
+_tr_add2 ins_conn_issue_title      "Was nun?"                                                                   # NOTE: '?' works in a yad title!
+_tr_add2 ins_conn_issue_text      "Es besteht keine  Internetverbindung (WLAN ist eventuell nicht bereit${_question})"
+_tr_add2 ins_conn_issue_nm1      "Netzwerk Manager"
+_tr_add2 ins_conn_issue_nm2      "Startet den Netzwerk Manager"
+_tr_add2 ins_conn_issue_oi1      "Offline Installation"
+_tr_add2 ins_conn_issue_oi2      "Installiert KDE ohne Internetverbindung (Systemaktualisierung nach der Installation empfohlen)"
+_tr_add2 ins_conn_issue_ex1      "Beenden"
+_tr_add2 ins_conn_issue_ex2      "Das Programm beenden"
+
+
+# 2024-Apr-20
+_tr_add2 ins_start_calamares         "Calamares startet"
+_tr_add2 ins_please_wait             "Es geht gleich weiter..."
+
+# 2024-Dec-05 (see also: 'after_install_us' and 'after_install_ustip' above)
+_tr_add2 after_install_usnat         "Update Native Packages"
+_tr_add2 after_install_usnat_tip     "Updates packages from repos in /etc/pacman.conf"
+_tr_add2 after_install_usnataur      "Update Native $_and AUR Packages"
+_tr_add2 after_install_usnataur_tip  "Updates packages from repos in /etc/pacman.conf and AUR"
+_tr_add2 after_install_ushlp         "Update Native $_and AUR Packages"
+_tr_add2 after_install_ushlp_tip     "Updates packages from repos in /etc/pacman.conf and AUR with an AUR helper"
+
+_tr_add2 after_install_umartip       "Update list of Arch mirrors before updating packages"
+_tr_add2 after_install_umentip       "Update list of EndeavourOS mirrors before updating packages"
+
+# 2024-Dec-06
+_tr_add2 after_install_reisub        "Information zu REISUB"
+_tr_add2 after_install_reisub2       "Aktiviere REISUB"
+_tr_add2 after_install_reisubtip     "REISUB hilft bei Systemabstürzen"
+
+# 2024-Dec-06, take 2
+_tr_add2 _commonphrase_enabled       "aktiviert"
+_tr_add2 _commonphrase_disabled      "deaktiviert"
+
+# 2024-Dec-10
+_tr_add2 arch_chroot                 "Information über arch-chroot"
+_tr_add2 arch_chroot_tip             "arch-chroot bietet einen Befehlszeilenzugriff auf ein anderes System"
+_tr_add2 _commonphrase_not_found     "%%s nicht gefunden"                                                   # Example usage: "$(ltr _commonphrase_not_found "file1.txt")"

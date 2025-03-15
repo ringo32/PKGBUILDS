@@ -7,11 +7,24 @@ tr_indexes=()
 # Declare variable that hold translations:
 declare -A tr_strings
 
+_UserWarning() {
+    if [ "$2" ] ; then
+        echo "$PRETTY_PROGNAME: warning: translation string '$1' or parameters '$2' was not properly recognized." >&2
+    else
+        echo "$PRETTY_PROGNAME: warning: translation string '$1' was not properly recognized." >&2
+    fi
+}
+
 # Helper functions:
 _tr_add() {
     local lang="$1"
     local ix="$2"
     local str="$3"
+
+    shift 3
+
+    printf -v str "$str" "$@"   # add possible parameters into the given string
+    [ $? -eq 0 ] || _UserWarning "$str" "$*"
 
     tr_strings["Lang_${lang}__$ix"]="$str"
 
@@ -35,7 +48,10 @@ _tr_add2() {
 ltr() {                                              # puts string to stdout
     local ix="$1"
     local str="${tr_strings["Lang_${SELECTED_EOS_LANGUAGE}__$ix"]}"
-    test -n "$2" && str+="$2"                        # remove this line some day...
+    shift
+    # test -n "$2" && { str+="$2"; shift; }            # remove this line some day...
+    printf -v str "$str" "$@"
+    [ $? -eq 0 ] || _UserWarning "$str" "$*"
     echo "$str"
 }
 ltr2() {                                             # puts string to stderr
@@ -152,8 +168,18 @@ _init_translations() {
 
     if [ -z "$lang" ] ; then
         # See /usr/share/i18n/locales
-        f1="$(echo "$LANG" | cut -d '_' -f 1)"
-        f2="$(echo "$LANG" | sed "s|^${f1}_\([A-Z@]*[a-z]*\).*$|\1|")"
+
+        #f1="$(echo "$LANG" | cut -d '_' -f 1)"
+        #f2="$(echo "$LANG" | sed "s|^${f1}_\([A-Z@]*[a-z]*\).*$|\1|")"
+        case "$LANG" in
+            *_*) f1="${LANG%%_*}"
+                 f2="${LANG#*_}"
+                 ;;
+            *)   f1="${LANG}"
+                 f2=""
+                 ;;
+        esac
+
         if [ -r "$trdir/translation-${f1}_$f2.bash" ] ; then
             lang="${f1}_$f2"
         elif [ -r "$trdir/translation-$f1.bash" ] ; then
@@ -208,7 +234,7 @@ _init_translations() {
 
     local xx ix
     local silent_lang_warnings=no
-    local pname="$PRETTY_PROGNAME"
+    local -r pname="$PRETTY_PROGNAME"
     local selected=0
 
     export SELECTED_EOS_LANGUAGE=en
@@ -230,15 +256,17 @@ _init_translations() {
 
         for trfile in "${trlist[@]}" ; do
             if [ -r "$trfile" ] ; then
-                #echo "$trfile" >&2
                 export SELECTED_EOS_LANGUAGE="$lang"
                 source "$trfile"
                 selected=1
-                if [ "$tr_prefer" = "manual" ] ; then
+
+                # silencing warnings no more needed
+                if false && [ "$tr_prefer" = "manual" ] ; then
                     case "$lang" in
                         "de") silent_lang_warnings=yes ;;   # de is not fully translated yet...
                     esac
                 fi
+
                 break
             fi
         done
@@ -262,6 +290,6 @@ _init_translations() {
         done
     fi
     if [ -r $errlog ] ; then
-        echo "Info: translation issues detected, see file '$errlog'."
+        echo "Info: some translations will fall back to English, see file '$errlog'."
     fi
 }

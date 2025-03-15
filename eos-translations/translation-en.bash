@@ -18,6 +18,8 @@
 #    <language>      An acronym for the language, e.g. "en" for English (check the LANG variable!).
 #    <placeholder>   A pre-defined name that identifies the place in the Welcome app where this string is used.
 #    "string"        The translated string for the Welcome app.
+#
+# Positional parameter %%s is supported inside a "string". Note that %%s is like %s in printf.
 
 # English:
 
@@ -56,8 +58,8 @@ _tr_add2 after_install_text    "After install tasks"
 _tr_add2 after_install_um      "Update Mirrors"
 _tr_add2 after_install_umtip   "Update list of mirrors before system update"
 
-_tr_add2 after_install_us      "Update System"
-_tr_add2 after_install_ustip   "Update System Software"
+_tr_add2 after_install_us      "Update System"                 # This definition is used by Welcome 24.11-1 and older.
+_tr_add2 after_install_ustip   "Update System Software"        # This definition is used by Welcome 24.11-1 and older.
 
 _tr_add2 after_install_dsi     "Detect system issues"
 _tr_add2 after_install_dsitip  "Detect any potential issues on system packages or elsewhere"
@@ -161,9 +163,11 @@ _tr_add2 issues_no               "No important system issues were detected."
 _tr_add2 cal_noavail            "Not available: "        # installer program
 _tr_add2 cal_warn               "Warning"
 _tr_add2 cal_info1              "This is a community development release.\n\n"                                   # specials needed!
-_tr_add2 cal_info2              "<b>Offline</b> method gives you an Xfce desktop with EndeavourOS theming.\nInternet connection is not needed.\n\n"
-_tr_add2 cal_info3              "<b>Online</b> method lets you choose your desktop, with vanilla theming.\nInternet connection is required.\n\n"
+_tr_add2 cal_info2              "<b>Offline</b> method gives you the %%s desktop.\nInternet connection is not needed.\n\n"
+_tr_add2 cal_info3              "<b>Online</b> method lets you choose your desktop.\nInternet connection is required.\n\n"
 _tr_add2 cal_info4              "Please Note: This release is a work-in-progress, please help us making it stable by reporting bugs.\n"
+_tr_add2 cal_info5              "\nAfter install updating system is recommended.\n\n"
+_tr_add2 cal_info6              "\nAfter install system is up to date.\n\n"
 _tr_add2 cal_choose             "Choose installation method"
 _tr_add2 cal_method             "Method"
 _tr_add2 cal_nosupport          "$PROGNAME: unsupported mode: "
@@ -331,9 +335,9 @@ _tr_add2 daily_assist_anews          "Latest Arch news"
 _tr_add2 daily_assist_anewstip       "Shows latest Arch news in a browser"
 
 # 2022-Sep-25
-_tr_add2 nb_nofify_user1             "There is important news at"                        # one (or more) dates, e.g. 2023-Feb-18
-_tr_add2 nb_nofify_user2             "Please click the"                                  # Software News
-_tr_add2 nb_nofify_user3             "button at the low left corner of this window."
+_tr_add2 nb_notify_user1             "There is important news at"                        # one (or more) dates, e.g. 2023-Feb-18
+_tr_add2 nb_notify_user2             "Please click the"                                  # Software News
+_tr_add2 nb_notify_user3             "button at the low left corner of this window."
 
 # 2023-Feb-20
 _tr_add2 ins_customized              "Fetch your install customization file (advanced)"
@@ -343,4 +347,50 @@ _tr_add2 ins_cust_text3              "This is most useful for <b>online</b> inst
 
 # 2023-Mar-29
 _tr_add2 ins_no_connection           "Note: no internet connection available, some buttons are hidden or do not work."
+
+# 2023-Aug-25
+_tr_add2 ins_pmtip2                  "Partitionmanager allows examining and managing disk partitions and structure"
+
+# 2023-Sep-16
+_tr_add2 ins_arm_start               "EndeavourOS ARM Image Installer"
+_tr_add2 ins_arm_starttip            "Start installing the EndeavourOS ARM edition"
+
+# 2024-Apr-18
+_tr_add2 ins_conn_issue_title        "What next?"                                                                   # NOTE: '?' works in a yad title!
+_tr_add2 ins_conn_issue_text         "No internet connection found (maybe wifi is not ready${_question})"
+_tr_add2 ins_conn_issue_nm1          "Network manager"
+_tr_add2 ins_conn_issue_nm2          "Starts the network manager"
+_tr_add2 ins_conn_issue_oi1          "Offline install"
+_tr_add2 ins_conn_issue_oi2          "Installs KDE without internet connection (system update is recommended after install)"
+_tr_add2 ins_conn_issue_ex1          "Exit"
+_tr_add2 ins_conn_issue_ex2          "Quit this program"
+
+# 2024-Apr-20
+_tr_add2 ins_start_calamares         "Starting calamares"
+_tr_add2 ins_please_wait             "Please wait..."
+
+# 2024-Dec-05 (see also: 'after_install_us' and 'after_install_ustip' above)
+_tr_add2 after_install_usnat         "Update Native Packages"
+_tr_add2 after_install_usnat_tip     "Updates packages from repos in /etc/pacman.conf"
+_tr_add2 after_install_usnataur      "Update Native $_and AUR Packages"
+_tr_add2 after_install_usnataur_tip  "Updates packages from repos in /etc/pacman.conf and AUR"
+_tr_add2 after_install_ushlp         "Update Native $_and AUR Packages"
+_tr_add2 after_install_ushlp_tip     "Updates packages from repos in /etc/pacman.conf and AUR with an AUR helper"
+
+_tr_add2 after_install_umartip       "Update list of Arch mirrors before updating packages"
+_tr_add2 after_install_umentip       "Update list of EndeavourOS mirrors before updating packages"
+
+# 2024-Dec-06
+_tr_add2 after_install_reisub        "REISUB information"
+_tr_add2 after_install_reisub2       "Enable REISUB"
+_tr_add2 after_install_reisubtip     "REISUB helps dealing with a system crash"
+
+# 2024-Dec-06, take 2
+_tr_add2 _commonphrase_enabled       "enabled"
+_tr_add2 _commonphrase_disabled      "disabled"
+
+# 2024-Dec-10
+_tr_add2 arch_chroot                 "arch-chroot information"
+_tr_add2 arch_chroot_tip             "arch-chroot provides a command line access to another system"
+_tr_add2 _commonphrase_not_found     "%%s not found"                                                   # Example usage: "$(ltr _commonphrase_not_found "file1.txt")"
 

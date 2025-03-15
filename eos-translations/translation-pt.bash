@@ -161,9 +161,11 @@ _tr_add2 issues_no               "Não foram detetados problemas importantes no 
 _tr_add2 cal_noavail            "Não disponível: "        # installer program
 _tr_add2 cal_warn               "Aviso"
 _tr_add2 cal_info1              "Esta é uma versão desenvolvida pela comunidade.\n\n"                                   # specials needed!
-_tr_add2 cal_info2              "<b>Offline</b> Este método dá-lhe um ambiente gráfico Xfce com tema do EndeavourOS.\nNão é necessária ligação à Internet.\n\n"
-_tr_add2 cal_info3              "<b>Online</b> Este método permite-lhe escolher o seu ambiente de trabalho, com temas padrão.\nÉ necessária ligação à Internet.\n\n"
+_tr_add2 cal_info2              "<b>Offline</b> Este método dá-lhe o ambiente de trabalho %%s.\nNão é necessária ligação à Internet.\n\n"
+_tr_add2 cal_info3              "<b>Online</b> Este método permite-lhe escolher o seu ambiente de trabalho.\nÉ necessária ligação à Internet.\n\n"
 _tr_add2 cal_info4              "Atenção: Esta versão está em aperfeiçoamento, ajude-nos a torná-la mais estável, reportando erros.\n"
+_tr_add2 cal_info5              "\nDepois de instalar, é recomendável atualizar o sistema.\n\n"
+_tr_add2 cal_info6              "\nDepois da instalação, o sistema fica atualizado.\n\n"
 _tr_add2 cal_choose             "Escolha o método de instalação"
 _tr_add2 cal_method             "Método"
 _tr_add2 cal_nosupport          "$PROGNAME: modo não suportado: "
@@ -331,9 +333,9 @@ _tr_add2 daily_assist_anews          "Últimas notícias do Arch"
 _tr_add2 daily_assist_anewstip       "Mostra as últimas notícias do Arch num navegador"
 
 # 2022-Sep-25
-_tr_add2 nb_nofify_user1             "Há notícias importantes em"                       # one (or more) dates, e.g. 2023-Feb-18
-_tr_add2 nb_nofify_user2             "Clique no botão"                                  # Software News
-_tr_add2 nb_nofify_user3             "no canto inferior esquerdo desta janela."
+_tr_add2 nb_notify_user1             "Há notícias importantes em"                       # one (or more) dates, e.g. 2023-Feb-18
+_tr_add2 nb_notify_user2             "Clique no botão"                                  # Software News
+_tr_add2 nb_notify_user3             "no canto inferior esquerdo desta janela."
 
 # 2023-Feb-20
 _tr_add2 ins_customized              "Obter o ficheiro de personalização da instalação (avançado)"
@@ -344,3 +346,9 @@ _tr_add2 ins_cust_text3              "Isto é mais útil para a instalação <b>
 # 2023-Mar-29
 _tr_add2 ins_no_connection           "Nota: sem ligação à Internet disponível, alguns botões estão ocultos ou não funcionam."
 
+# 2023-Aug-25
+_tr_add2 ins_pmtip2                  "O Gestor de Partições permite analisar e gerir as partições e a estrutura do disco."
+
+# 2023-Sep-16
+_tr_add2 ins_arm_start             "Instalador da Imagem ARM do EndeavourOS"
+_tr_add2 ins_arm_starttip          "Iniciar a instalação da edição ARM do EndeavourOS"

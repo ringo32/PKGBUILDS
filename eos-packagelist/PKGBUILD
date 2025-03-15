@@ -2,8 +2,8 @@
 # Contributor : Sravan Pannala <sradjoker@endeavouros.com>
 
 pkgname=eos-packagelist
-pkgver=2.1
-pkgrel=1
+pkgver=2.3.1
+pkgrel=2
 pkgdesc="An application to gather and optionally install package lists from the EndeavourOS installer"
 arch=('any')
 license=('GPL3')
@@ -13,10 +13,14 @@ source=(
     eos-packagelist
     eos-packagelist.bash-completion
 )
-sha256sums=('7bfa0ef997ab8484003953f55aaec4650005379e0383d064cff48e8e8a820086'
-            '4b13f6ef7af87431157d2a80f856cba2c2d6d1a835cceddc96f2339f528849e7')
+sha256sums=('0f421de391d125c437ec86af584db60fd1f71a09c8b26506d1b60620ac429270'
+            '097c09ef22e981ec9dc6e1a8b6e5172c2558b0c52fe4dbd9949a55b448f8bdfb')
 
 package() {
+    local profiles=eos-packagelist.profiles
+    eos-packagelist --list | sort -u > $profiles
+
     install -Dm0755 "$srcdir/eos-packagelist"       "$pkgdir/usr/bin/eos-packagelist"
     install -Dm0644 eos-packagelist.bash-completion "$pkgdir/usr/share/bash-completion/completions/eos-packagelist"
+    install -Dm0644 $profiles                       "$pkgdir/etc/$profiles"
 }
